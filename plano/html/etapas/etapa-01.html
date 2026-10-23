@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etapa 1 &middot; Plano CONTROLAR-COMPUTADOR · o robô Python por voz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="etapa.css">
+</head>
+
+<body>
+
+<div class="wrap wrap--etapa">
+
+  <header class="head">
+    <p class="eyebrow"><a href="../index.html">&larr; Plano CONTROLAR-COMPUTADOR · o robô Python por voz</a> &middot; etapa 01</p>
+    <h1>O robô ouve</h1>
+    <div class="status-linha"><span class="selo"><span class="ponto ponto--parte" aria-hidden="true"></span>em parte</span> <p class="note">em andamento, 5 de 6</p></div>
+    <p class="lede"><strong>Objetivo.</strong> O robô escuta o microfone o tempo todo, junto com a Luna, e sabe separar &quot;Python, abre o Chrome&quot; da conversa normal. Nesta etapa ele ainda não faz nada: só mostra na tela do notebook o que ouviu.</p>
+  </header>
+
+  <div class="criterio">
+    <p class="rotulo">Pronto quando</p>
+    <p>Na voz dele, 10 de 10 &quot;Python, abre o Chrome&quot; aparecem como comando, nenhuma das 10 frases de conversa vira comando, e isso vale com a conversa da Luna aberta ao mesmo tempo.</p>
+  </div>
+
+  <div class="legend"><span><span class="selo"><span class="ponto ponto--feito" aria-hidden="true"></span>implementado</span></span><span><span class="selo"><span class="ponto ponto--parte" aria-hidden="true"></span>em parte</span></span><span><span class="selo"><span class="ponto ponto--zero" aria-hidden="true"></span>nem começou</span></span></div>
+
+  <article class="corpo">
+<p>O que já se sabe (prova de 23/10/2026, com as frases ditas pela voz Maria do Windows, gravadas e passadas ao Vosk):</p>
+<div class="scroller"><table><thead><tr><th>N&ordm;</th><th>Tarefa</th><th class="status">Status</th></tr></thead><tbody><tr data-st="parte"><td class="num">01</td><td>No vocabulário do modelo pequeno <strong>existem</strong> &quot;python&quot;, &quot;abre&quot;, &quot;explorer&quot;, &quot;email&quot;, &quot;print&quot;, &quot;luna&quot;, &quot;manda&quot;, &quot;pasta&quot;. <strong>Não existem</strong> &quot;chrome&quot; nem &quot;e-mail&quot; com hífen.</td><td class="status"><span class="ponto ponto--parte" role="img" aria-label="em parte" title="em parte"></span></td></tr><tr data-st="parte"><td class="num">02</td><td>Ouvindo livre, o modelo erra quase tudo (&quot;Python, abre o Chrome&quot; virou &quot;fale abril&quot;). Com a <strong>lista fechada de frases</strong> (o modo de gramática do Vosk) acertou os quatro comandos, com uma falha que importa: não ouviu o &quot;Python&quot; do começo em nenhum deles. A Maria fala &quot;Python&quot; do jeito dela, e o Flávio fala &quot;páiton&quot;; só a voz dele decide.</td><td class="status"><span class="ponto ponto--parte" role="img" aria-label="em parte" title="em parte"></span></td></tr><tr data-st="parte"><td class="num">03</td><td>A frase de conversa &quot;Luna, o que você acha do Python?&quot; não virou comando.</td><td class="status"><span class="ponto ponto--parte" role="img" aria-label="em parte" title="em parte"></span></td></tr><tr data-st="parte"><td class="num">04</td><td>Como &quot;Chrome&quot; não está no vocabulário, a frase da lista é &quot;abre o cromo&quot; (o som é o mesmo). Se não bastar, &quot;abre o navegador&quot;.</td><td class="status"><span class="ponto ponto--parte" role="img" aria-label="em parte" title="em parte"></span></td></tr></tbody></table></div>
+<p>Segunda prova (23/10/2026, à tarde): a Maria falando <strong>&quot;Páiton, abre o crôme&quot;</strong>, escrito do jeito que brasileiro fala, foi ouvida como &quot;python abre o cromo&quot; nas 3 grafias testadas. Com &quot;Python&quot; escrito em inglês ela fala algo que o modelo ouve como &quot;pai&quot;. A conversa &quot;Eu gosto de programar em Páiton, abre o crôme depois&quot; veio como &quot;[unk] python abre o cromo&quot;: a regra de começar pelo nome segurou. Esses áudios viraram as provas da voz Maria.</p>
+<p>Achado da máquina (23/10/2026): <strong>o microfone padrão do Windows neste computador é a placa de captura de vídeo</strong> (&quot;Interface de áudio digital&quot;, Display capture-UVC05), não um microfone. O robô e o gravador da voz escolhem o microfone por um pedaço do nome (<code>--microfone Realtek</code>). O Realtek abriu a 16 kHz e captou som (nível médio 190, pico 3.084 em 4 segundos de sala).</p>
+<h3>Tarefas</h3>
+<div class="scroller"><table><thead><tr><th>N&ordm;</th><th>Tarefa</th><th class="status">Status</th></tr></thead><tbody><tr data-st="feito"><td class="num">01</td><td>(23/10/2026) Ouvir o microfone em modo compartilhado, escolhido pelo nome. Falta conferir com a Luna aberta ao mesmo tempo, que é o caso dele.</td><td class="status"><span class="ponto ponto--feito" role="img" aria-label="implementado" title="implementado"></span></td></tr><tr data-st="feito"><td class="num">02</td><td>(23/10/2026) Ouvir com a lista fechada de frases, mais o &quot;[unk]&quot; que pega todo o resto da conversa.</td><td class="status"><span class="ponto ponto--feito" role="img" aria-label="implementado" title="implementado"></span></td></tr><tr data-st="feito"><td class="num">03</td><td>(23/10/2026) Comando só vale se a frase inteira for o nome mais um comando da lista. Frase sem o nome, com o nome no meio (&quot;o que você acha do Python&quot;) ou com conversa colada depois é conversa.</td><td class="status"><span class="ponto ponto--feito" role="img" aria-label="implementado" title="implementado"></span></td></tr><tr data-st="feito"><td class="num">04</td><td>(23/10/2026) Mostrar numa linha por frase: a hora, se foi comando ou conversa e o que ouviu (<code>python -m robo</code>).</td><td class="status"><span class="ponto ponto--feito" role="img" aria-label="implementado" title="implementado"></span></td></tr><tr data-st="feito"><td class="num">05</td><td>(23/10/2026) Arnês de prova que roda por um comando, sem microfone (<code>python -m pytest robo/testes</code>): a regra pura e os áudios de cada voz em <code>audios/&lt;voz&gt;/comando</code> e <code>audios/&lt;voz&gt;/conversa</code>. A voz dele entra sozinha quando existir.</td><td class="status"><span class="ponto ponto--feito" role="img" aria-label="implementado" title="implementado"></span></td></tr><tr data-st="parte"><td class="num">06</td><td>Gravar a voz dele (<code>python -m robo.testes.gravar_minha_voz --microfone Realtek</code>): 10 vezes &quot;Python, abre o Chrome&quot; e 10 frases de conversa, entre elas &quot;Meu pai abre o Chrome todo dia&quot;, &quot;Luna, abre o Chrome&quot; e &quot;Python é o nome do robô&quot;. Se o &quot;Python&quot; dele não for ouvido, testar o plano B (faster-whisper ouvindo só o que vem depois de uma pausa) e anotar aqui qual ficou e por quê.</td><td class="status"><span class="ponto ponto--parte" role="img" aria-label="em parte" title="em parte"></span></td></tr></tbody></table></div>
+  </article>
+
+  
+
+  <section>
+    <h2>Desvios registrados</h2>
+    <div class="desvios">
+<p class="vazio">Nenhum desvio registrado.</p>
+    </div>
+  </section>
+
+  <nav class="passo"><a class="nav-ir" href="etapa-00.html"><span>anterior</span>Etapa 0 &middot; Decisões e a casa do robô</a><a class="nav-ir nav-ir--fim" href="etapa-02.html"><span>pr&oacute;xima</span>Etapa 2 &middot; O robô obedece: abre o Chrome na TV</a></nav>
+
+  <footer>
+    <span>etapas/01-o-robo-ouve.md</span>
+    <span>23.10.2026</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

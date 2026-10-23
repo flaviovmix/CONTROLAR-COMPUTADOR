@@ -1,0 +1,422 @@
+/* base
+   Tokens de cor e medida, reset e tipografia. Todo mundo usa. */
+
+:root {
+  --ground:      #f4f6f8;
+  --surface:     #ffffff;
+  --surface-alt: #eceff3;
+  --line:        #d3dae1;
+  --line-soft:   #e3e8ed;
+  --ink:         #14191d;
+  --ink-soft:    #4b5760;
+  --ink-faint:   #77848d;
+  --accent:      #0e5a6e;
+  --accent-soft: #e0eef1;
+  --accent-edge: #a8ccd6;
+  /* st-done (etapa implementada) e st-nota (a nota do projeto) sao o mesmo
+     verde hoje, e continuam separadas de proposito: sao eixos diferentes, e
+     uma ja foi azul enquanto a outra guardava o verde. */
+  --st-zero:     #cf2f22;
+  --st-hold:     #e0a30a;
+  --st-done:     #1d8a4e;
+  --st-nota:     #1d8a4e;
+  --st-idle:     #6b7780;
+  --shadow: 0 1px 2px rgba(20, 25, 29, .06), 0 8px 24px -16px rgba(20, 25, 29, .28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #11161a;
+    --surface:     #171e23;
+    --surface-alt: #1e262c;
+    --line:        #2c363d;
+    --line-soft:   #232c33;
+    --ink:         #e6ecf0;
+    --ink-soft:    #a3b0b9;
+    --ink-faint:   #77858e;
+    --accent:      #57b6ca;
+    --accent-soft: #12333c;
+    --accent-edge: #2c5d68;
+    --st-zero:     #f2604e;
+    --st-hold:     #f2c14e;
+    --st-done:     #6fc298;
+    --st-nota:     #6fc298;
+    --st-idle:     #8b979f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:      #11161a;
+  --surface:     #171e23;
+  --surface-alt: #1e262c;
+  --line:        #2c363d;
+  --line-soft:   #232c33;
+  --ink:         #e6ecf0;
+  --ink-soft:    #a3b0b9;
+  --ink-faint:   #77858e;
+  --accent:      #57b6ca;
+  --accent-soft: #12333c;
+  --accent-edge: #2c5d68;
+  --st-zero:     #f2604e;
+  --st-hold:     #f2c14e;
+  --st-done:     #6fc298;
+  --st-nota:     #6fc298;
+  --st-idle:     #8b979f;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 40px) 96px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 5vw, 56px);
+}
+
+/* a pagina de etapa carrega tabela larga, entao ela usa a mesma largura do
+   indice em vez da coluna estreita de leitura que tinha antes */
+/* cabecalho
+   O topo de qualquer pagina: eyebrow, titulo, fita de cores, lede. */
+
+.head { display: flex; flex-direction: column; gap: 20px; }
+
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+.eyebrow a { text-decoration: none; }
+.eyebrow a:hover { text-decoration: underline; }
+
+h1 {
+  font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+  line-height: 1.04;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.wrap--etapa h1 { font-size: clamp(1.8rem, 4.6vw, 2.5rem); }
+
+.lede {
+  margin: 0;
+  font-size: 1.06rem;
+  color: var(--ink-soft);
+}
+
+.lede strong { color: var(--ink); }
+
+.bars { display: flex; height: 4px; border-radius: 2px; overflow: hidden; }
+.bars i { flex: 1; }
+
+.status-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.status-linha .note { margin: 0; }
+/* vitais
+   A lista de numeros do indice (quantas etapas, quantas abertas). */
+
+.vitals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin: 0;
+}
+
+.vital { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 3px; }
+
+.vital dt {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .66rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.vital dd {
+  margin: 0;
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: 1.02rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.vital dd .ponto {
+  width: 12px;
+  height: 12px;
+  margin-right: 9px;
+}
+
+.vital dd small {
+  display: inline;
+  margin-left: 5px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 400;
+  font-size: .82rem;
+  color: var(--ink-soft);
+}
+/* saude
+   O quadro que abre o indice: a nota de codigo humanizado e seguro, o que ela
+   significa, e as oito dimensoes com o que puxou cada uma pra baixo. Nota
+   sozinha nao ensina nada, entao a evidencia vem na mesma tela. */
+
+.saude {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.saude-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 16px;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 14px;
+}
+
+.saude-rotulo {
+  margin: 0;
+  flex: 1 1 100%;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .66rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.saude-numero {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.saude-numero strong { font-size: 2.1rem; font-weight: 700; }
+.saude-numero span:last-child { font-size: 1rem; color: var(--ink-faint); }
+
+.saude-frase {
+  margin: 0;
+  font-size: .95rem;
+  color: var(--ink-soft);
+}
+
+/* as oito dimensoes: numero na frente, nome e motivo do lado */
+.saude-dims {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.saude-dims li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .92rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.saude-dims b { color: var(--ink); }
+
+.dim-nota {
+  flex: none;
+  width: 30px;
+  padding: 2px 0;
+  border-radius: 6px;
+  text-align: center;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--st-idle);
+}
+
+.dim-nota--nota  { background: var(--st-nota); }
+.dim-nota--parte { background: var(--st-hold); color: var(--ink); }
+.dim-nota--zero  { background: var(--st-zero); }
+
+.saude-acao {
+  margin: 0;
+  font-size: .9rem;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line-soft);
+  padding-top: 12px;
+}
+
+.saude-acao b { color: var(--ink); }
+
+/* projeto que nunca foi auditado: o quadro inteiro, com as oito dimensoes em
+   "nao informado". A moldura existe antes da nota; o cinza e o convite. */
+.saude--sem-nota .saude-numero strong { color: var(--ink-faint); }
+.saude--sem-nota .saude-frase { color: var(--ink-faint); }
+.vital--sem-nota dd small { margin-left: 0; color: var(--ink-faint); }
+.dim-nota--sem-nota { background: var(--st-idle); }
+
+/* os cartoes das oito dimensoes, no mesmo formato do quadro de numeros.
+   Coluna fixa de proposito: com auto-fit sobrariam duas celulas vazias na
+   segunda linha, e o fundo do grid (que e a linha divisoria) apareceria como
+   um bloco cinza sem conteudo. Oito itens cabem exatos em 4, 2 ou 1 coluna. */
+.vitals--saude { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (max-width: 900px) {
+  .vitals--saude { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .vitals--saude { grid-template-columns: minmax(0, 1fr); }
+}
+/* os cartoes das oito dimensoes, no mesmo formato do quadro de numeros */
+.vitals--saude .vital dt a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent-edge); }
+.vitals--saude .vital dt a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.saude-rotulo a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); }
+.saude-rotulo a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* a pagina da nota: uma secao por dimensao */
+.dim { margin: 0 0 4px; }
+.dim h2 { display: flex; align-items: center; gap: 12px; font-size: 1.15rem; margin: 0 0 6px; }
+.dim p { margin: 0; color: var(--ink-soft); max-width: 76ch; }
+
+/* na pagina da nota o topo vem sozinho no quadro: sem irmao embaixo, a linha
+   divisoria seria um risco solto */
+.saude > .saude-topo:only-child { border-bottom: none; padding-bottom: 0; }
+/* secao
+   A moldura de uma secao e o titulo dela. */
+
+section { display: flex; flex-direction: column; gap: 16px; }
+
+h2 {
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: 1.34rem;
+  letter-spacing: -.01em;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+h2 .count {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.note { margin: 0; color: var(--ink-soft); font-size: .94rem; }
+/* selo
+   A bolinha de status, o selo com a palavra e a tag. */
+
+/* a bolinha de status: cor cheia, sem borda */
+.ponto {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--st-zero);
+}
+
+.ponto--feito { background: var(--st-done); }
+.ponto--parte { background: var(--st-hold); }
+.ponto--zero  { background: var(--st-zero); }
+
+/* a nota de codigo humanizado e seguro nao e status de etapa: e outro eixo, e
+   por isso tem cor propria (verde), fora da escala azul/laranja/vermelho */
+.ponto--nota     { background: var(--st-nota); }
+.ponto--sem-nota { background: var(--st-idle); }
+
+/* bolinha + palavra, pra legenda e pra pagina da etapa */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.tag {
+  display: inline-block;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .7rem;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-edge);
+}
+
+td.sit .tag, td.obs .tag { margin-top: 2px; }
+
+code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .88em;
+  background: var(--surface-alt);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+/* rodape
+   O rodape de qualquer pagina. */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  font-size: .84rem;
+  color: var(--ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}

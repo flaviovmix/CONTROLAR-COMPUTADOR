@@ -2,3 +2,11 @@
 gravacoes/
 
 __pycache__/
+.pytest_cache/
+.venv/
+
+# Modelo de voz do robô: 31 MB pra baixar, o LEIA-ME ensina
+robo/modelos/
+
+# A voz do Flávio gravada pras provas fica só nesta máquina
+robo/testes/audios/flavio/

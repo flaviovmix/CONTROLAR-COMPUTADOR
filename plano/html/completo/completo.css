@@ -1,0 +1,624 @@
+/* base
+   Tokens de cor e medida, reset e tipografia. Todo mundo usa. */
+
+:root {
+  --ground:      #f4f6f8;
+  --surface:     #ffffff;
+  --surface-alt: #eceff3;
+  --line:        #d3dae1;
+  --line-soft:   #e3e8ed;
+  --ink:         #14191d;
+  --ink-soft:    #4b5760;
+  --ink-faint:   #77848d;
+  --accent:      #0e5a6e;
+  --accent-soft: #e0eef1;
+  --accent-edge: #a8ccd6;
+  /* st-done (etapa implementada) e st-nota (a nota do projeto) sao o mesmo
+     verde hoje, e continuam separadas de proposito: sao eixos diferentes, e
+     uma ja foi azul enquanto a outra guardava o verde. */
+  --st-zero:     #cf2f22;
+  --st-hold:     #e0a30a;
+  --st-done:     #1d8a4e;
+  --st-nota:     #1d8a4e;
+  --st-idle:     #6b7780;
+  --shadow: 0 1px 2px rgba(20, 25, 29, .06), 0 8px 24px -16px rgba(20, 25, 29, .28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #11161a;
+    --surface:     #171e23;
+    --surface-alt: #1e262c;
+    --line:        #2c363d;
+    --line-soft:   #232c33;
+    --ink:         #e6ecf0;
+    --ink-soft:    #a3b0b9;
+    --ink-faint:   #77858e;
+    --accent:      #57b6ca;
+    --accent-soft: #12333c;
+    --accent-edge: #2c5d68;
+    --st-zero:     #f2604e;
+    --st-hold:     #f2c14e;
+    --st-done:     #6fc298;
+    --st-nota:     #6fc298;
+    --st-idle:     #8b979f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:      #11161a;
+  --surface:     #171e23;
+  --surface-alt: #1e262c;
+  --line:        #2c363d;
+  --line-soft:   #232c33;
+  --ink:         #e6ecf0;
+  --ink-soft:    #a3b0b9;
+  --ink-faint:   #77858e;
+  --accent:      #57b6ca;
+  --accent-soft: #12333c;
+  --accent-edge: #2c5d68;
+  --st-zero:     #f2604e;
+  --st-hold:     #f2c14e;
+  --st-done:     #6fc298;
+  --st-nota:     #6fc298;
+  --st-idle:     #8b979f;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 40px) 96px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 5vw, 56px);
+}
+
+/* a pagina de etapa carrega tabela larga, entao ela usa a mesma largura do
+   indice em vez da coluna estreita de leitura que tinha antes */
+/* cabecalho
+   O topo de qualquer pagina: eyebrow, titulo, fita de cores, lede. */
+
+.head { display: flex; flex-direction: column; gap: 20px; }
+
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+.eyebrow a { text-decoration: none; }
+.eyebrow a:hover { text-decoration: underline; }
+
+h1 {
+  font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+  line-height: 1.04;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.wrap--etapa h1 { font-size: clamp(1.8rem, 4.6vw, 2.5rem); }
+
+.lede {
+  margin: 0;
+  font-size: 1.06rem;
+  color: var(--ink-soft);
+}
+
+.lede strong { color: var(--ink); }
+
+.bars { display: flex; height: 4px; border-radius: 2px; overflow: hidden; }
+.bars i { flex: 1; }
+
+.status-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.status-linha .note { margin: 0; }
+/* secao
+   A moldura de uma secao e o titulo dela. */
+
+section { display: flex; flex-direction: column; gap: 16px; }
+
+h2 {
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: 1.34rem;
+  letter-spacing: -.01em;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+h2 .count {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.note { margin: 0; color: var(--ink-soft); font-size: .94rem; }
+/* tabela
+   Tabela, rolagem no estreito, coluna de status e linha que vira link. */
+
+.scroller {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+table { border-collapse: collapse; width: 100%; min-width: 820px; }
+
+thead th {
+  background: var(--surface-alt);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-align: left;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+tbody td { padding: 15px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+
+td.num {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
+  width: 1%;
+  white-space: nowrap;
+  padding-left: 20px;
+  position: relative;
+}
+
+td.num::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  bottom: 15px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--st-idle);
+}
+
+tr[data-st="feito"] td.num::before { background: var(--st-done); }
+tr[data-st="parte"] td.num::before { background: var(--st-hold); }
+tr[data-st="zero"]  td.num::before { background: var(--st-zero); }
+
+td.etapa { min-width: 15rem; }
+
+td.etapa b {
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  display: block;
+  letter-spacing: -.005em;
+}
+
+td.etapa em {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-size: .88rem;
+  font-style: normal;
+}
+
+td.crit { color: var(--ink-soft); font-size: .9rem; min-width: 19rem; }
+
+td.obs { min-width: 13rem; color: var(--ink-soft); font-size: .86rem; }
+td.obs p { margin: 0 0 7px; }
+td.obs p:last-child { margin-bottom: 0; }
+td.obs .vazio { color: var(--ink-faint); }
+
+/* coluna final: o status em tres estados */
+td.status, th.status { width: 1%; white-space: nowrap; text-align: center; }
+td.status { padding-top: 18px; padding-right: 24px; padding-left: 24px; }
+th.status { padding-right: 22px; padding-left: 22px; text-align: center; }
+
+td.sit { min-width: 12rem; }
+td.sit p { margin: 7px 0 0; font-size: .86rem; color: var(--ink-soft); }
+
+/* linha que vira link */
+
+a.ir {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  padding-right: 18px;
+}
+
+a.ir b { color: var(--accent); }
+
+a.ir::after {
+  content: "\2192";
+  position: absolute;
+  right: 0;
+  top: 1px;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .15s, transform .15s;
+}
+
+a.ir:hover b { text-decoration: underline; }
+a.ir:hover::after { opacity: 1; transform: translateX(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  a.ir::after { transition: none; }
+}
+
+a.trava {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.trava:hover { text-decoration: underline; }
+
+/* a linha do D* ou P* apontada por um link #d1 / #p1 */
+tbody tr:target { background: var(--accent-soft); }
+tbody tr { scroll-margin-top: 20px; }
+
+@media (max-width: 900px) {
+  /* no estreito sobram o numero, a etapa e o status, que e o que se procura */
+  td.crit, th.crit, td.obs, th.obs { display: none; }
+  table { min-width: 420px; }
+}
+/* selo
+   A bolinha de status, o selo com a palavra e a tag. */
+
+/* a bolinha de status: cor cheia, sem borda */
+.ponto {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--st-zero);
+}
+
+.ponto--feito { background: var(--st-done); }
+.ponto--parte { background: var(--st-hold); }
+.ponto--zero  { background: var(--st-zero); }
+
+/* a nota de codigo humanizado e seguro nao e status de etapa: e outro eixo, e
+   por isso tem cor propria (verde), fora da escala azul/laranja/vermelho */
+.ponto--nota     { background: var(--st-nota); }
+.ponto--sem-nota { background: var(--st-idle); }
+
+/* bolinha + palavra, pra legenda e pra pagina da etapa */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.tag {
+  display: inline-block;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .7rem;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-edge);
+}
+
+td.sit .tag, td.obs .tag { margin-top: 2px; }
+
+code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .88em;
+  background: var(--surface-alt);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+/* etapa
+   A pagina de uma etapa: criterio, tarefas, checklist, desvios, navegacao. */
+
+.criterio {
+  border: 1px solid var(--accent-edge);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--accent-soft);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.criterio .rotulo {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.criterio p:last-child { margin: 0; font-size: 1rem; color: var(--ink); }
+
+.corpo { display: flex; flex-direction: column; gap: 18px; }
+
+.corpo h2 { font-size: 1.24rem; margin-top: 10px; }
+
+.corpo h3 {
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: .78rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 6px 0 0;
+}
+
+.corpo p { margin: 0; max-width: 68ch; }
+
+.corpo ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.corpo ul li {
+  position: relative;
+  padding-left: 20px;
+  max-width: 74ch;
+}
+
+.corpo ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .62em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--accent-edge);
+}
+
+/* na tabela da etapa a coluna da bolinha e so a bolinha */
+.corpo td.status, .corpo th.status {
+  width: 1%;
+  padding-left: 20px;
+  padding-right: 22px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.corpo td.status { padding-top: 18px; }
+
+.corpo ul li strong { color: var(--ink); }
+
+.corpo hr { border: none; border-top: 1px solid var(--line); margin: 8px 0; }
+
+.corpo blockquote {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent-edge);
+  background: var(--surface);
+  border-radius: 0 8px 8px 0;
+  color: var(--ink-soft);
+}
+
+.corpo table { min-width: 520px; }
+
+ul.pend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+ul.pend li {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--st-hold);
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 14px 18px;
+  font-size: .95rem;
+  color: var(--ink-soft);
+}
+
+ul.pend li strong { color: var(--ink); }
+
+ul.pend li em {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  color: var(--ink-faint);
+  font-size: .9rem;
+}
+
+.desvios {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 18px 22px;
+  color: var(--ink-soft);
+  font-size: .94rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.desvios ul { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 8px; }
+.desvios p { margin: 0; }
+.desvios strong { color: var(--ink); }
+
+/* o rotulo do bloco de desvios, que a etapa e o plano inteiro mostram */
+.desvios .rotulo {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.passo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+a.nav-ir {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 14px 18px;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: .95rem;
+}
+
+a.nav-ir span {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+a.nav-ir--fim { text-align: right; }
+a.nav-ir:hover { border-color: var(--accent); }
+
+@media (max-width: 640px) {
+  .passo { grid-template-columns: 1fr; }
+  a.nav-ir--fim { text-align: left; }
+}
+/* legenda
+   A tira de selos que explica o que cada bolinha quer dizer. */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  align-items: center;
+  font-size: .84rem;
+  color: var(--ink-soft);
+}
+
+.legend > span { display: inline-flex; align-items: center; gap: 9px; }
+
+.wrap--etapa .legend {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+  gap: 10px 28px;
+}
+/* rodape
+   O rodape de qualquer pagina. */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  font-size: .84rem;
+  color: var(--ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+/* completo
+   So do plano inteiro numa pagina: sumario, bloco por etapa, ancoras. */
+
+.etapa-bloco {
+  scroll-margin-top: 24px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+  gap: 18px;
+}
+
+.etapa-titulo {
+  font-family: Archivo, ui-sans-serif, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  display: block;
+}
+
+.etapa-bloco .eyebrow a { color: var(--accent); }
+
+.sumario { min-width: 420px; }
+.sumario td.etapa em { font-size: .86rem; }
+/* codigo
+   Bloco de codigo cercado (arvore de pastas, comandos). */
+
+/* bloco de codigo cercado (arvore de pastas, comandos) */
+.corpo pre {
+  margin: 0 0 1rem;
+  padding: .9rem 1rem;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: var(--surface-alt);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .82rem;
+  line-height: 1.55;
+}
+.corpo pre code { background: none; padding: 0; font-size: inherit; }
